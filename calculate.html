@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>蒙蒙的计算器</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="/jeesite/games/static/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="/jeesite/games/static/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/jeesite/games/static/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/jeesite/static/utils/jquery.toast.min.css">
+    <script src="/jeesite/static/utils/jquery.toast.min.js" type="text/javascript"></script>
+</head>
+<style>
+    body{
+        background-size:100% 100%;
+        overflow:hidden;
+    }
+</style>
+<body>
+    <div style="margin: auto 10px;text-align: center;">
+        <form class="bs-example bs-example-form" style="margin-top: 20px" role="form">
+
+            <h3>蒙蒙的计算器</h3>
+            <div class="row">
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+						<button  class="btn btn-default" type="button">
+							半径
+						</button>
+					    </span>
+                        <input type="text" class="form-control"  id="banjing" placeholder="半径" onkeyup="value=value.replace(/[^\d.]/g,'')";>
+                        <span class="input-group-btn">
+						<button id="banjingClean" class="btn btn-default" type="button">
+							清除
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+						<button  class="btn btn-default" type="button">
+							弧长
+						</button>
+					    </span>
+                        <input type="text" class="form-control" id="huchang" placeholder="弧长" onkeyup="value=value.replace(/[^\d.]/g,'')">
+                        <span class="input-group-btn">
+						<button id="huchangClean" class="btn btn-default" type="button">
+							清除
+						</button>
+					    </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+						<button  class="btn btn-default" type="button">
+							拱高
+						</button>
+					    </span>
+                        <input type="text" class="form-control" id="gonggao" placeholder="拱高" onkeyup="value=value.replace(/[^\d.]/g,'')">
+                        <span class="input-group-btn">
+						<button id="gonggaoClean" class="btn btn-default" type="button">
+							清除
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+						<button  class="btn btn-default" type="button">
+							弦长
+						</button>
+					    </span>
+                        <input type="text" class="form-control"  id="xianchang" placeholder="弦长" onkeyup="value=value.replace(/[^\d.]/g,'')">
+                        <span class="input-group-btn">
+						<button id="xianchangClean" class="btn btn-default" type="button">
+							清除
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group ">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">单位：
+                            </button>
+                        </span>
+                        <select id="danwei" class="form-control" >
+                            <option value="mm">mm（毫米）</option>
+                            <option value="cm">cm（厘米）</option>
+                            <option value="dm">dm（分米）</option>
+                            <option value="m">m（米）</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" style="margin-top: 20px">
+                    <div class="input-group ">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">模式：
+                            </button>
+                        </span>
+                        <select id="multiply" class="form-control" >
+                            <option value="0.01">中精度</option>
+                            <option value="0.1">低精度</option>
+                            <option value="0.001">高精度</option>
+                        </select>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+
+                <div class="col-lg-12" style="margin-top: 20px">
+                    <div class="progress progress-striped active" style="margin-top: 18px;">
+                        <div id="process" class="progress-bar progress-bar-success" role="progressbar"
+                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                             style="width: 0%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" style="margin-top: 20px;">
+
+                    <button id="calculateBtn" type="button" class="btn-info btn-lg">计算</button>
+                    <button id="cleanBtn" type="button" class="btn-warning btn-lg">清空</button>
+                    <button id="noticeBtn" type="button" class="btn-success btn-lg" data-toggle="modal" data-target="#notice">说明</button>
+                </div>
+            </div><!-- /.row -->
+        </form>
+
+
+
+        <div style="margin-top: 20px;">
+            <span class="label label-success"><a style="color: #fff" href="http://www.kmm520.top">蒙蒙的主页</a></span>
+            <span class="label label-default"><a style="color: #fff" href="http://www.kmm520.top/game.html">蒙蒙的小游戏</a></span>
+            <!--<span class="label label-primary"><a style="color: #fff" href="http://www.kmm520.top/lyh/resume.html">蒙蒙的老公</a></span>-->
+        </div>
+    </div>
+    <div class="modal fade active" id="notice" tabindex="-1" role="dialog" aria-labelledby="noticeModel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        使用说明
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    1、若出现负数或长时间无响应时，请切换不同的模式。<p></p>
+                    2、默认单位是毫米，推荐单位为毫米，数据会更精准。<p></p>
+                    3、算出结果时反推下，多计算几次，验证结果准确性。<p></p>
+                    4、数值超过100000以上时，效率低，选择合适的单位。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModel">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</body>
+<script>
+    var danweiFlag="mm";
+    var banjing;
+    var huchang;
+    var gonggao;
+    var xianchang;
+    var paramRadius=3.14;
+    var accuracy=0.0001;//精度
+    var multiply=0.01;//倍率
+    //改变精度
+    $("#multiply").change(function(){
+        multiply=$("#multiply").val();
+        alert(multiply);
+    });
+    //清空输入框功能
+    $("#banjingClean").click(function () {
+        $("#banjing").val("");
+    })
+
+    $("#huchangClean").click(function () {
+        $("#huchang").val("");
+    })
+
+    $("#gonggaoClean").click(function () {
+        $("#gonggao").val("");
+    })
+
+    $("#xianchangClean").click(function () {
+        $("#xianchang").val("");
+    })
+
+    $("#cleanBtn").click(function () {
+
+        $("#banjing").val("");
+        $("#huchang").val("");
+        $("#gonggao").val("");
+        $("#xianchang").val("");
+    });
+
+    $("#danwei").click(function () {
+        danweiFlag=$("#danwei").val();
+    });
+    //根据选择的单位算出相应的值
+    $("#danwei").change(function () {
+        switch (danweiFlag){
+            case "m":
+                 banjing=$("#banjing").val()*1000;
+                 huchang=$("#huchang").val()*1000;
+                 gonggao=$("#gonggao").val()*1000;
+                 xianchang=$("#xianchang").val()*1000;
+                break;
+            case "dm":
+                 banjing=$("#banjing").val()*100;
+                 huchang=$("#huchang").val()*100;
+                 gonggao=$("#gonggao").val()*100;
+                 xianchang=$("#xianchang").val()*100;
+                break;
+            case "cm":
+                 banjing=$("#banjing").val()*10;
+                 huchang=$("#huchang").val()*10;
+                 gonggao=$("#gonggao").val()*10;
+                 xianchang=$("#xianchang").val()*10;
+                break;
+            case "mm":
+                 banjing=$("#banjing").val();
+                 huchang=$("#huchang").val();
+                 gonggao=$("#gonggao").val();
+                 xianchang=$("#xianchang").val();
+                break;
+        }
+        var danwei=$("#danwei").val();
+        switch (danwei){
+            case "m":
+                setNum(1000);
+                break;
+            case "dm":
+                setNum(100);
+                break;
+            case "cm":
+                setNum(10);
+                break;
+            case "mm":
+                setNum(1);
+                break;
+        }
+    });
+    function setNum(num) {
+        if($("#banjing").val()!=""){
+            $("#banjing").val(banjing/num);
+        }
+        if($("#huchang").val()!=""){
+            $("#huchang").val(huchang/num);
+        }
+        if($("#gonggao").val()!=""){
+            $("#gonggao").val(gonggao/num);
+        }
+        if($("#xianchang").val()!=""){
+            $("#xianchang").val(xianchang/num);
+        }
+    }
+    //计算功能
+    $("#calculateBtn").click(function () {
+        var work=new Worker("calculate.js");
+        var parmas=new Array();
+        var danwei=$("#danwei").val();
+        var banjing=$("#banjing").val();
+        var huchang=$("#huchang").val();
+        var gonggao=$("#gonggao").val();
+        var xianchang=$("#xianchang").val();
+        parmas[0]=0;
+        parmas[1]=huchang;
+        parmas[3]=accuracy;
+        parmas[4]=multiply;
+        if(banjing!=""&&huchang!=""){
+            xianchang = Math.sin((huchang) / (2 * banjing)) * banjing * 2;
+            gonggao = banjing - Math.cos((huchang) / (2 * banjing)) * banjing;
+            $("#xianchang").val(xianchang.toFixed(2));
+            $("#gonggao").val(gonggao.toFixed(2));
+        }else if(banjing!=""&&gonggao!=""){
+            xianchang = Math.sqrt(8 * banjing * gonggao - 4 * gonggao * gonggao);
+            huchang = 2 * banjing * Math.asin((xianchang / 2) / banjing);
+            $("#huchang").val(huchang.toFixed(2));
+            $("#xianchang").val(xianchang.toFixed(2));
+        }else if(banjing!=""&&xianchang!=""){
+            huchang = 2 * banjing * Math.asin((xianchang / 2) / banjing);
+            gonggao = 0 - (Math.cos((huchang) / (2 * banjing)) * banjing - banjing);
+            $("#huchang").val(huchang.toFixed(2));
+            $("#gonggao").val(gonggao.toFixed(2));
+        }else if(huchang!=""&&gonggao!=""){
+            process();
+            parmas[2]=gonggao;
+            work.postMessage(parmas);
+            work.onmessage = function(event) {
+                if(event.data[0]!=10000){
+                    $("#xianchang").val(event.data[1].toFixed(2));
+                    $("#banjing").val(event.data[0].toFixed(2));
+                }
+            };
+        }else if(huchang!=""&&xianchang!=""){
+            process();
+            parmas[2]=xianchang;
+            work.postMessage(parmas);
+            work.onmessage = function(event) {
+                if(event.data[0]!=10000){
+                    $("#gonggao").val(event.data[1].toFixed(2));
+                    $("#banjing").val(event.data[0].toFixed(2));
+                }
+            };
+        }else if(gonggao!=""&&xianchang!=""){
+            banjing = ((xianchang * xianchang) / 4 + gonggao * gonggao) / 2 / gonggao;
+            huchang = 2 * banjing * Math.asin((xianchang / 2) / banjing);
+            $("#huchang").val(huchang.toFixed(2));
+            $("#banjing").val(banjing.toFixed(2));
+        }else{
+            alert("请输入两个条件");
+        }
+    });
+    //多线程计算
+    function process(){
+        var times=0;
+        var timer=setInterval(function () {
+            if(times>100){
+                clearInterval(timer);
+                $.toast({
+                    heading: 'Error',
+                    text: '计算超时，请确认数据是否正常或切换模式！',
+                    showHideTransition: 'fade',
+                    position: 'top-center',
+                    icon: 'error'
+                });
+                setTimeout(function () {
+                    $("#process").css("width","0%");
+                },800);
+            }
+            if($("#banjing").val()!=""){
+                $("#process").css("width","100%");
+                setTimeout(function () {
+                    $("#process").css("width","0%");
+                },800)
+                clearInterval(timer);
+            }else{
+                $("#process").css("width",times+"%");
+                times+=5
+            }
+        },200);
+    }
+</script>
+</html>
